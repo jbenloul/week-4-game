@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crystal Game</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js" src ="assets/javascript/game.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+
+<h1 class="gameTitle jumbotron" style="text-align: center; color:blue;"> 
+	CRYSTAL MATH 
+	<br>
+	<button class="btn-danger">Game Start</button>
+
+</h1>
+
+<h3 id="bankrollText" style="text-align: center; margin-top: -15px;"> Your Bankroll: </h3>
+<h3 id="currentText" style="text-align: center; margin-top: -15px"> Your Current Cost: </h3>
+<h3 id="wins" style="text-align: center; margin-top: -15px"> Wins: 0</h3>
+<h3 id="losses" style="text-align: center; margin-top: -15px"> Losses: 0</h3>
+
+<p style="text-align: center;""> Rules of the game! You want to buy as much "crystal" as you can with the random amount of money you happened to have on you. Don't try to buy too much though! It won't end well.. </p>
+
+	<span id=imageArea style="margin-left: 75px"></span>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">
+
+  //$(document).ready(function() {
+
+
+// variables: bankroll - number we are working towards. userClick
+var bankroll;
+var createImage = ["assets/images/tray.jpg", "assets/images/loose.jpg", "assets/images/container.jpg", "assets/images/baggie.jpg"]
+var image =$("<img>");
+var userClick;
+var totalAmount = ""
+var numberArray = []
+var currentcost = ""  //where the addition occurs/var that needs to equal to bankroll
+var wins = 0
+var losses = 0
+
+//This is to create images with random values assigned to them. It pulls these values from the array.
+
+	for (var i = 0; i < createImage.length; i++){
+	var image =$("<img>");
+	image.attr("src", createImage[i]);
+	image.attr("id", "image" + [i]);
+	image.attr("width", "300px");
+	image.attr("height" ,"300px");
+	image.attr("value", Math.floor(Math.random() * 12 + 1))
+	image.appendTo($('#imageArea'));
+		//this second part pushes these values into an array. I think theres a better way of doing it but this is the only thing that worked after hoursssssssssss. And it was in a seperate for loop but I just combined them.
+		var number = $("#image" + [i]).attr("value");
+		numberArray.push(parseInt(number))
+	}
+
+
+//This is the onclick game start button! Will add the new bankRoll to the display
+
+function gameStart (){
+	$(".btn-danger").on("click", function(){
+	bankroll =  Math.floor(Math.random()*(( 120 - 19) +1 ) +19);
+	alert("Are you ready to buy some Math?? *Scratches arm furiously*");
+	$("#bankrollText").html("Your Bankroll: $" + bankroll)
+	$('#currentText').html("Your Current Cost: $" + theTotal)
+	theTotal = 0;
+	});
+};
+
+//checks that you won or not
+function didWin() {
+	console.log(bankroll, theTotal)
+if (bankroll === theTotal){
+	wins++;
+	$('#wins').html("Wins: " + wins);
+	alert("YOU WIN! You successfully bought the right amount of 'math!'" );
+	var audioElement = $('<audio id="science">');
+    var science = audioElement.attr('src', 'assets/audio/YeahScience.mp3');
+
+    $("body").append(audioElement);
+    
+    $('#science').play();
+    initialize();
+    //JAVASCRIPT AUDIO OBJECT
+}
+
+else if (bankroll < theTotal){
+	losses++;
+	alert("You lost! Test your luck again!!!")
+	$('#losses').html("Losses: " + losses)
+	initialize()
+	}
+}
+
+function initialize (){
+	bankroll =  Math.floor(Math.random()*(( 120 - 19) +1 ) +19);
+	$("#bankrollText").html("Your Bankroll: $" + bankroll)
+	theTotal = 0;
+	$('#currentText').html("Your Current Cost: $" + theTotal)
+}
+
+
+//4 on click, grab value, add that to the total?
+
+gameStart()
+
+var theTotal = 0;
+//var clickedValue = $('')
+$("#image0").on("click", function() {
+	theTotal = theTotal + numberArray[0];
+    $('#currentText').text("Current Cost: $" + theTotal);  
+    didWin()      
+});
+
+var theTotal = 0;
+//var clickedValue = $('')
+$("#image1").on("click", function() {
+	theTotal = theTotal + numberArray[1];
+    $('#currentText').text("Current Cost: $" + theTotal);  
+    didWin()      
+});
+
+var theTotal = 0;
+//var clickedValue = $('')
+$("#image2").on("click", function() {
+	theTotal = theTotal + numberArray[2];
+	$('#currentText').text("Current Cost: $" + theTotal); 
+    didWin()       
+});
+
+var theTotal = 0;
+//var clickedValue = $('')
+$("#image3").on("click", function() {
+	theTotal = theTotal + numberArray[3];
+    $('#currentText').text("Current Cost: $" + theTotal);        
+    didWin()
+});
+
+
+			//var crystalNumber = Math.floor(Math.random() * 12 + 1);
+			//console.log([crystalNumber]);
+			//crystalAmount.push(crystalNumber);
+			//This for loop that I miraculously made work runs a for loop 4 times, and pushes that amount into the crystal array
+			//now to link it to the crystals.....
+			//clickable.setValue(crystalNumber[i])
+			//clickable[i].setAttribute("value", crystalAmount[i])
+
+
+</script>
+</body>
+</html>
+	
